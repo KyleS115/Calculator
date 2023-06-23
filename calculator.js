@@ -1,3 +1,8 @@
+let value1 = Number()
+let operator = String()
+let value2 = Number()
+let equals = Number()
+
 // Adds all arguments together
 function add() {
     let editedValue = arguments[0];
@@ -34,9 +39,15 @@ function divide() {
     return editedValue
 };
 
-console.log(add(2, 5, 7));
-console.log(14);
-
-console.log(subtract(5, 3, 1));
-console.log(1);
-
+// Chooses which operator function to use and returns the solution
+function operate(val1, operator, val2) {
+    if (operator = '+') {
+        return add(val1, val2);
+    } else if (operator = '-') {
+        return subtract(val1, val2);
+    } else if (operator = 'x') {
+        return multiply(val1, val2);
+    } else if (operator = '%') {
+        return divide(val1, val2);
+    };
+};
