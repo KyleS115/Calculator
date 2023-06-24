@@ -1,14 +1,13 @@
-// Adds all arguments together
+// FUNCTION -------------------------------------------------------
+
 function add(a, b) {
     return a + b
 };
 
-// Subtracts all remaining arguments from the first argument
 function subtract(a, b) {
     return a - b
 };
 
-// Multiplies the first argument by all remaining arguments
 function multiply(a, b) {
     return a * b
 };
@@ -17,7 +16,7 @@ function divide(a, b) {
     return a / b
 };
 
-// Chooses which operator function to use and returns the solution
+    // Chooses which operator function to use and returns the solution
 function operate(val1, operator, val2) {
     if (operator === '+') {
         return add(parseInt(val1), parseInt(val2));
@@ -30,13 +29,14 @@ function operate(val1, operator, val2) {
     };
 };
 
-// Clears display, history, and all stored values in script
+    // Clears display, history, and all stored values in script
 function clear() {
     displayValues = [''];
     display.textContent = '';
     historyLines.forEach(line => line.textContent = '');
 };
 
+    // Shifts history down and clears display
 function updateHistory(solution) {
     historyLines[2].textContent = historyLines[1].textContent;
     historyLines[1].textContent = historyLines[0].textContent;
@@ -44,15 +44,26 @@ function updateHistory(solution) {
     display.textContent = '';
 };
 
+// DOM ASSIGNMENTS ---------------------------------------------------------
+
 displayValues = ['']
+
 display = document.getElementById('display');
 
 historyLines = Array.from(document.querySelectorAll('.history'));
 
 clearButton = document.getElementById('clear');
-clearButton.addEventListener('click', clear);
 
 numberButtons = Array.from(document.querySelectorAll('button.numberbutton'));
+
+operatorButtons = Array.from(document.getElementsByClassName('operatorbutton'));
+
+equalsButton = document.getElementById('equals');
+
+clearButton.addEventListener('click', clear());
+
+// BUTTON EVENT LISTENERS ----------------------------------------------------
+
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
         display.textContent += button.textContent;
@@ -60,7 +71,6 @@ numberButtons.forEach((button) => {
     });
 });
 
-operatorButtons = Array.from(document.getElementsByClassName('operatorbutton'));
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (displayValues[displayValues.length - 1] != '') {
@@ -71,7 +81,6 @@ operatorButtons.forEach(button => {
     });
 });
 
-equalsButton = document.getElementById('equals');
 equalsButton.addEventListener('click', () => {
     if (displayValues[displayValues.length - 1] != '') {
         while (displayValues.length > 1) {
