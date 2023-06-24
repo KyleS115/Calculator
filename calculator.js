@@ -19,50 +19,67 @@ function divide(a, b) {
 
 // Chooses which operator function to use and returns the solution
 function operate(val1, operator, val2) {
-    if (operator = '+') {
+    if (operator === '+') {
         return add(parseInt(val1), parseInt(val2));
-    } else if (operator = '-') {
+    } else if (operator === '-') {
         return subtract(parseInt(val1), parseInt(val2));
-    } else if (operator = 'X') {
+    } else if (operator === 'X') {
         return multiply(parseInt(val1), parseInt(val2));
-    } else if (operator = '%') {
+    } else if (operator === '%') {
         return divide(parseInt(val1), parseInt(val2));
     };
 };
 
-// clears all 
+// Clears display, history, and all stored values in script
 function clear() {
-    display.textContent = ''
+    displayValues = [''];
+    display.textContent = '';
     historyLines.forEach(line => line.textContent = '');
 };
 
-function updateDisplay() {
-    
+function updateHistory(solution) {
+    historyLines[2].textContent = historyLines[1].textContent;
+    historyLines[1].textContent = historyLines[0].textContent;
+    historyLines[0].textContent = display.textContent + ' = ' + solution;
+    display.textContent = '';
 };
 
-displayValues = []
+displayValues = ['']
 display = document.getElementById('display');
 
-historyLines = document.querySelectorAll('.history')
+historyLines = Array.from(document.querySelectorAll('.history'));
 
 clearButton = document.getElementById('clear');
 clearButton.addEventListener('click', clear);
 
-numberButtons = document.getElementsByClassName('numberbutton');
-numberButtons.forEach(button => {
+numberButtons = Array.from(document.querySelectorAll('button.numberbutton'));
+numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        if (operator === '') {
-            value1 += button.textContent
-        }
-    })
+        display.textContent += button.textContent;
+        displayValues[displayValues.length - 1] += button.textContent;
+    });
 });
 
-operatorButtons = document.getElementsByClassName('operatorbutton');
+operatorButtons = Array.from(document.getElementsByClassName('operatorbutton'));
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
-        if (value1 != '' && value2 === '') {
-            operator = button.id;
-            plotDisplay();
+        if (displayValues[displayValues.length - 1] != '') {
+            displayValues[displayValues.length] = button.textContent;
+            displayValues[displayValues.length] = '';
+            display.textContent += ' ' + button.textContent + ' ';
         };
     });
+});
+
+equalsButton = document.getElementById('equals');
+equalsButton.addEventListener('click', () => {
+    if (displayValues[displayValues.length - 1] != '') {
+        while (displayValues.length > 1) {
+            updateSolution = operate(displayValues[0], displayValues[1], displayValues[2]);
+            displayValues[0] = updateSolution;
+            displayValues.splice(1, 2);
+        };
+        updateHistory(Math.round(displayValues[0] * 100) / 100);
+        displayValues = ['']
+    };
 });

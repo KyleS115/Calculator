@@ -41,19 +41,27 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    text-align: center;
 }
 
 #display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 35%;
+    height: 40%;
     padding: 0;
-    font-size: 36px;
-    outline: 2px solid black;
+    font-size: 20px;
 }
 
 .history {
-    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background-color: darkgray;
+    width: 100%;
+    height: 20%;
+    outline: 2px solid black;
 }
 
 button {
@@ -63,5 +71,5 @@ button {
 }
 
 #equals {
-    width: 70%;
+    width: 45%;
 }
