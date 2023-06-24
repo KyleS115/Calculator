@@ -1,19 +1,19 @@
 // FUNCTION -------------------------------------------------------
 
 function add(a, b) {
-    return a + b
+    return Math.round((a + b) * 100) / 100
 };
 
 function subtract(a, b) {
-    return a - b
+    return Math.round((a - b) * 100) / 100
 };
 
 function multiply(a, b) {
-    return a * b
+    return Math.round((a * b) * 100) / 100
 };
 
 function divide(a, b) {
-    return a / b
+    return Math.round((a / b) * 100) / 100
 };
 
     // Chooses which operator function to use and returns the solution
@@ -33,7 +33,9 @@ function operate(val1, operator, val2) {
 function clear() {
     displayValues = [''];
     display.textContent = '';
-    historyLines.forEach(line => line.textContent = '');
+    historyLines[0].textContent = '';
+    historyLines[1].textContent = '';
+    historyLines[2].textContent = '';
 };
 
     // Shifts history down and clears display
@@ -60,9 +62,13 @@ operatorButtons = Array.from(document.getElementsByClassName('operatorbutton'));
 
 equalsButton = document.getElementById('equals');
 
-clearButton.addEventListener('click', clear());
+allButtons = Array.from(document.querySelectorAll('button'));
 
 // BUTTON EVENT LISTENERS ----------------------------------------------------
+
+clearButton.addEventListener('click', () => {
+    clear();
+});
 
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -88,7 +94,16 @@ equalsButton.addEventListener('click', () => {
             displayValues[0] = updateSolution;
             displayValues.splice(1, 2);
         };
-        updateHistory(Math.round(displayValues[0] * 100) / 100);
+        updateHistory(displayValues[0]);
         displayValues = ['']
+    };
+});
+
+allButtons.forEach(button => {
+    button.onmouseover = () => {
+        button.style.filter = 'brightness(80%)';
+    };
+    button.onmouseout = () => {
+        button.style.filter = 'brightness(100%)';
     };
 });
