@@ -19,13 +19,13 @@ function divide(a, b) {
     // Chooses which operator function to use and returns the solution
 function operate(val1, operator, val2) {
     if (operator === '+') {
-        return add(parseInt(val1), parseInt(val2));
+        return add(val1, val2);
     } else if (operator === '-') {
-        return subtract(parseInt(val1), parseInt(val2));
+        return subtract(val1, val2);
     } else if (operator === 'X') {
-        return multiply(parseInt(val1), parseInt(val2));
+        return multiply(val1, val2);
     } else if (operator === '%') {
-        return divide(parseInt(val1), parseInt(val2));
+        return divide(val1, val2);
     };
 };
 
@@ -88,12 +88,15 @@ operatorButtons.forEach(button => {
 });
 
 equalsButton.addEventListener('click', () => {
+    console.log(displayValues);
     if (displayValues[displayValues.length - 1] != '') {
         while (displayValues.length > 1) {
-            updateSolution = operate(displayValues[0], displayValues[1], displayValues[2]);
+            console.log(displayValues);
+            updateSolution = operate(parseFloat(displayValues[0]), displayValues[1], parseFloat(displayValues[2]));
             displayValues[0] = updateSolution;
             displayValues.splice(1, 2);
         };
+        console.log(displayValues);
         updateHistory(displayValues[0]);
         displayValues = ['']
     };
